@@ -1,0 +1,269 @@
+Microsoft Windows [Version 10.0.17763.557]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\asha>cd..
+
+C:\Users>cd..
+
+C:\>cd xampp
+
+C:\xampp>cd mysql bin
+The system cannot find the path specified.
+
+C:\xampp>cd mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 16
+Server version: 10.1.40-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| asha               |
+| asha1              |
+| asha2              |
+| computerstore      |
+| information_schema |
+| myproject          |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| soap_store         |
+| test               |
++--------------------+
+11 rows in set (0.00 sec)
+
+MariaDB [(none)]> use asha;
+Database changed
+MariaDB [asha]> create database bookMyShow;
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [asha]> use bookMyShow;
+Database changed
+MariaDB [bookMyShow]> create table movies
+    ->     -> (
+    ->     -> id int,
+    ->     -> mname varchar(100)
+    ->     -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-> (
+    -> id int,
+    -> mname varchar(100)
+    -> )' at line 2
+MariaDB [bookMyShow]> create table movies
+    -> (
+    -> id int,
+    -> mname varchar(100)
+    -> );
+Query OK, 0 rows affected (0.28 sec)
+
+MariaDB [bookMyShow]> insert into movies(id,mname)
+    ->  values(1,'Maleficent'),(2,'Frozen'),(3,'Tangled');
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [bookMyShow]> select *from books;
+ERROR 1146 (42S02): Table 'bookmyshow.books' doesn't exist
+MariaDB [bookMyShow]> select *from movies;
++------+------------+
+| id   | mname      |
++------+------------+
+|    1 | Maleficent |
+|    2 | Frozen     |
+|    3 | Tangled    |
++------+------------+
+3 rows in set (0.00 sec)
+
+MariaDB [bookMyShow]> create table theatres(
+    -> mid int,
+    -> tname varchar(100));
+Query OK, 0 rows affected (0.14 sec)
+
+MariaDB [bookMyShow]>  alter table movies modify column id int primary key;
+Query OK, 3 rows affected (0.53 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [bookMyShow]> desc movies;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int(11)      | NO   | PRI | NULL    |       |
+| mname | varchar(100) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+MariaDB [bookMyShow]> drop table movies;
+Query OK, 0 rows affected (0.20 sec)
+
+MariaDB [bookMyShow]> create table  movies
+    -> (
+    -> id int,
+    -> mname varchar(100)
+    -> );
+Query OK, 0 rows affected (0.16 sec)
+
+MariaDB [bookMyShow]> insert into movies(id,mname)
+    -> values(1,'ABCD'),(2,'F2'),(3,'Majili')
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 3
+MariaDB [bookMyShow]> insert into movies(id,mname)
+    -> values(1,'ABCD'),(2,'F2'),(3,'Majili');
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [bookMyShow]> select *from movies;
++------+--------+
+| id   | mname  |
++------+--------+
+|    1 | ABCD   |
+|    2 | F2     |
+|    3 | Majili |
++------+--------+
+3 rows in set (0.00 sec)
+
+MariaDB [bookMyShow]> desc movies;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int(11)      | YES  |     | NULL    |       |
+| mname | varchar(100) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+MariaDB [bookMyShow]> alter table movies modify column id int primary key;
+Query OK, 3 rows affected (0.63 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [bookMyShow]> desc movies;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int(11)      | NO   | PRI | NULL    |       |
+| mname | varchar(100) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+MariaDB [bookMyShow]> show columns from theatres;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| mid   | int(11)      | YES  |     | NULL    |       |
+| tname | varchar(100) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+MariaDB [bookMyShow]> drop table theatres;
+Query OK, 0 rows affected (0.10 sec)
+
+MariaDB [bookMyShow]> create table theatres(
+    -> tid int primary key,
+    -> tname varchar(100),
+    ->  mid int, foreign key(mid) references movies(id));
+Query OK, 0 rows affected (0.20 sec)
+
+MariaDB [bookMyShow]> show columns from theatres;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| tid   | int(11)      | NO   | PRI | NULL    |       |
+| tname | varchar(100) | YES  |     | NULL    |       |
+| mid   | int(11)      | YES  | MUL | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+MariaDB [bookMyShow]> insert into theatres(tid,tname,mid)
+    -> values
+    ->  (1,'kinnera',1),
+    ->  (2,'kameshwari',2),
+    ->  (3,'chitralaya',3),
+    ->  (4,'varun_inox',1),
+    ->  (5,'jagadhama',2),
+    ->  (6,'melody',3),
+    ->  (7,'sangam',1),
+    ->  (8,'sharath',2),
+    ->  (9,'srikanya',3);
+Query OK, 9 rows affected (0.05 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+MariaDB [bookMyShow]> select *from theatres;
++-----+------------+------+
+| tid | tname      | mid  |
++-----+------------+------+
+|   1 | kinnera    |    1 |
+|   2 | kameshwari |    2 |
+|   3 | chitralaya |    3 |
+|   4 | varun_inox |    1 |
+|   5 | jagadhama  |    2 |
+|   6 | melody     |    3 |
+|   7 | sangam     |    1 |
+|   8 | sharath    |    2 |
+|   9 | srikanya   |    3 |
++-----+------------+------+
+9 rows in set (0.00 sec)
+
+MariaDB [bookMyShow]> select *from theatres;
++-----+------------+------+
+| tid | tname      | mid  |
++-----+------------+------+
+|   1 | kinnera    |    1 |
+|   2 | kameshwari |    2 |
+|   3 | chitralaya |    3 |
+|   4 | varun_inox |    1 |
+|   5 | jagadhama  |    2 |
+|   6 | melody     |    3 |
+|   7 | sangam     |    1 |
+|   8 | sharath    |    2 |
+|   9 | srikanya   |    3 |
++-----+------------+------+
+9 rows in set (0.00 sec)
+
+MariaDB [bookMyShow]> select *from movies;
++----+--------+
+| id | mname  |
++----+--------+
+|  1 | ABCD   |
+|  2 | F2     |
+|  3 | Majili |
++----+--------+
+3 rows in set (0.00 sec)
+
+MariaDB [bookMyShow]> show columns from movies
+    -> ;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int(11)      | NO   | PRI | NULL    |       |
+| mname | varchar(100) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+MariaDB [bookMyShow]> create table ticket(tckid int auto_increment, movie_name varchar(100), thearter vachar(100), phone varchar(12), notck int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'vachar(100), phone varchar(12), notck int)' at line 1
+MariaDB [bookMyShow]> create table ticket(tckid int auto_increment, movie_name varchar(100), thearter varchar(100), phone varchar(12), notck int);
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+MariaDB [bookMyShow]> create table ticket(tckid int auto_increment primary key, movie_name varchar(100), thearter varchar(100), phone varchar(12), notck int);
+Query OK, 0 rows affected (0.24 sec)
+
+MariaDB [bookMyShow]> show column from ticket;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'column from ticket' at line 1
+MariaDB [bookMyShow]> show column ticket;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'column ticket' at line 1
+MariaDB [bookMyShow]> desc ticket;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| tckid      | int(11)      | NO   | PRI | NULL    | auto_increment |
+| movie_name | varchar(100) | YES  |     | NULL    |                |
+| thearter   | varchar(100) | YES  |     | NULL    |                |
+| phone      | varchar(12)  | YES  |     | NULL    |                |
+| notck      | int(11)      | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.18 sec)
+
+MariaDB [bookMyShow]> insert into ticket
